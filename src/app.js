@@ -5,41 +5,45 @@ import "./style.css";
 import "./assets/img/rigo-baby.jpg";
 import "./assets/img/4geeks.ico";
 
-const suits = ["♥", "♦", "♣", "♠"];
-const ranks = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "J",
-  "Q",
-  "K",
-  "A"
-];
+window.onload = () => {
+  document.querySelector(".card").classList.add(generateRandomSuit());
+  document.querySelector(".card").innerHTML = generateRandomNumber();
+  document.getElementById("generateButton").addEventListener("click", () => {
+    changeCard();
+  });
+};
 
-function generateRandomCard() {
-  const randomSuit = suits[Math.floor(Math.random() * suits.length)];
-  const randomRank = ranks[Math.floor(Math.random() * ranks.length)];
+let generateRandomNumber = () => {
+  let numbers = [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K",
+    "A"
+  ];
 
-  return { suit: randomSuit, rank: randomRank };
-}
+  let indexNumbers = Math.floor(Math.random() * numbers.length);
+  return numbers[indexNumbers];
+};
 
-function updateCardElement(card, cardElement) {
-  cardElement.querySelector(".top-suit").textContent = card.suit;
-  cardElement.querySelector(".bottom-suit").textContent = card.suit;
-  cardElement.querySelector(".rank").textContent = card.rank;
-}
+let generateRandomSuit = () => {
+  let suit = ["diamond", "spade", "heart", "club"];
+  let indexSuit = Math.floor(Math.random() * suit.length);
+  return suit[indexSuit];
+};
 
-const cardContainer = document.getElementById("cardContainer");
-const generatedCard = document.getElementById("generatedCard");
-const generateButton = document.getElementById("generateButton");
+let changeCard = () => {
+  const generatedCard = document.querySelector(".card");
 
-generateButton.addEventListener("click", function() {
-  const newCard = generateRandomCard();
-  updateCardElement(newCard, generatedCard);
-});
+  generatedCard.classList.remove("diamond", "spade", "heart", "club");
+  generatedCard.classList.add(generateRandomSuit());
+  generatedCard.innerHTML = generateRandomNumber();
+};
